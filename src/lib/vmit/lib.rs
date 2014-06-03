@@ -2,15 +2,16 @@
 #![crate_id = "vmit#0.1"]
 
 use std::os::getcwd;
+use std::owned::Box;
 
 pub struct Workspace {
-    dir: ~Path
+    dir: Box<Path>
 }
 
 impl Workspace {
 
     pub fn new(dir: &Path) -> Workspace {
-        Workspace { dir: ~dir.clone()}
+        Workspace { dir: box dir.clone()}
     }
 
     pub fn from_pwd() -> Workspace {
@@ -20,7 +21,7 @@ impl Workspace {
 
 impl std::fmt::Show for Workspace {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f.buf, "Hi: {}", self.dir.display())
+        write!(f, "Hi: {}", self.dir.display())
     }
 }
 
@@ -36,6 +37,7 @@ mod test {
             Some(tmpdir) => {
                 println!("{}", tmpdir.path().display());
                 let ws = Workspace::new(tmpdir.path());
+
 
             }
             None => {
